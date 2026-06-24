@@ -6,18 +6,19 @@ export class Creature {
   constructor(name: string, health: number) {
     this.name = name;
     this.health = health;
+    this.maxHealth = health; // Set maxHealth to the initial health value
   }
 
   public takeDamage(amount: number): void {
-    if (this.health + amount < 0) {
+    if (this.health - amount < 0) {
       this.health = 0;
     } else {
-      this.health += amount;
+      this.health -= amount;
     }
   }
   public heal(amount: number): void {
     if (this.health + amount > this.maxHealth) {
-      this.health = 100;
+      this.health = this.maxHealth;
     } else {
       this.health += amount;
     }
