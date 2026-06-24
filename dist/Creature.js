@@ -2,9 +2,30 @@
 export class Creature {
     name;
     health;
+    maxHealth = 100; // percentage of health, 100 is full health
     constructor(name, health) {
         this.name = name;
         this.health = health;
+        this.maxHealth = health; // Set maxHealth to the initial health value
+    }
+    takeDamage(amount) {
+        if (this.health - amount < 0) {
+            this.health = 0;
+        }
+        else {
+            this.health -= amount;
+        }
+    }
+    heal(amount) {
+        if (this.health + amount > this.maxHealth) {
+            this.health = this.maxHealth;
+        }
+        else {
+            this.health += amount;
+        }
+    }
+    getName() {
+        return this.name;
     }
 }
 //# sourceMappingURL=Creature.js.map

@@ -2,7 +2,7 @@
 
 import { Creature } from "./Creature.js";
 
-class Player extends Creature{
+export class Player extends Creature{
   private level: number;
 
   constructor(name: string, health: number = 100, level: number = 1) {

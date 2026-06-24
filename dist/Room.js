@@ -2,7 +2,7 @@
 // TODO:
 // Create a basic structure for the Room class, including the boundaries and enemies.
 import { Enemy } from './Enemy.js';
-class Room {
+export class Room {
     dimensions;
     enemies;
     constructor(dimensions, enemies) {

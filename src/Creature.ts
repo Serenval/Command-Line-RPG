@@ -3,6 +3,7 @@ export class Creature {
   private name: string;
   private health: number;
   private maxHealth: number = 100; // percentage of health, 100 is full health
+  private position: { x: number; y: number } = { x: 0, y: 0 }; // Default position at (0, 0)
   constructor(name: string, health: number) {
     this.name = name;
     this.health = health;
@@ -22,5 +23,12 @@ export class Creature {
     } else {
       this.health += amount;
     }
+  }
+  public changePosition(x: number, y: number): void {
+    this.position.x = x;
+    this.position.y = y;
+  }
+  getName() {
+    return this.name;
   }
 }
