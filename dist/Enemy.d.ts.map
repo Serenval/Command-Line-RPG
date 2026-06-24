@@ -1,0 +1,1 @@
+{"version":3,"file":"Enemy.d.ts","sourceRoot":"","sources":["../src/Enemy.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AAEzC,qBAAa,KAAM,SAAQ,QAAQ;IACjC,OAAO,CAAC,WAAW,CAAS;gBAEhB,IAAI,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,EAAE,WAAW,EAAE,MAAM;IAK7D,MAAM,IAAI,MAAM;CAGjB"}

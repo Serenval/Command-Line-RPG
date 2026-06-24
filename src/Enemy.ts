@@ -1,3 +1,14 @@
-// Enemy Class will be responsible for manufacturing a basic enemy with health, attack power.
-// Todo:
-// Create a basic class, including properties for attack power, health and name. 
+import { Creature } from './Creature.js';
+
+export class Enemy extends Creature {
+  private attackPower: number;
+
+  constructor(name: string, health: number, attackPower: number) {
+    super(name, health);
+    this.attackPower = attackPower;
+  }
+
+  attack(): number {
+    return this.attackPower;
+  }
+}

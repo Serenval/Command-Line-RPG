@@ -1,0 +1,1 @@
+{"version":3,"file":"Creature.js","sourceRoot":"","sources":["../src/Creature.ts"],"names":[],"mappings":"AAAA,2EAA2E;AAC3E,MAAM,OAAO,QAAQ;IACX,IAAI,CAAS;IACb,MAAM,CAAS;IACvB,YAAY,IAAY,EAAE,MAAc;QACtC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACvB,CAAC;CACF"}
