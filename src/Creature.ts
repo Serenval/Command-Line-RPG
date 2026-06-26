@@ -28,6 +28,9 @@ export class Creature {
     this.position.x = x;
     this.position.y = y;
   }
+  public getPosition(): {x: number, y: number} {
+    return this.position;
+  }
   getName() {
     return this.name;
   }

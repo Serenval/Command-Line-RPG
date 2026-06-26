@@ -13,7 +13,7 @@ enum GameStateEnum {
   GameOver
 }
 
-class GameState {
+export class GameState {
   private currentGameState: GameStateEnum;
   private player: Player | null = null;
   private currentRoom: Room | null = null;
@@ -25,16 +25,29 @@ class GameState {
   public startGame(): void {
     this.currentGameState = GameStateEnum.Running;
     this.player = new Player("Hero");
-    this.currentRoom = new Room([[0, 0], [10, 10]], [new Enemy("Goblin", 30, 5)]);
+    this.currentRoom = new Room(10, 5, [new Enemy("Goblin", 30, 5)], this.player);
     console.log("Game started!");
     console.log(`Player: ${this.player.getName()}}`);
     console.log(`Current Room: ${this.currentRoom}`);
   }
+  public getPlayer(): Player | null{
+    return this.player;
+  }
+  public getCurrentRoom(): Room | null {
+    return this.currentRoom;
+  }
   public gameLoop(): void {
     if(this.currentGameState == GameStateEnum.Running) {
-      // Render the room grid and player position
-      // Read player input for movement or actions
-      // Update the game state based on player actions and enemy behavior
+      this.currentRoom?.renderRoom();
+      // 2. Simulate moving the player forward
+      const currentPos = this.player?.getPosition();
+      if (currentPos) {
+        console.log(`\nMoving Hero to (${currentPos.x + 1}, ${currentPos.y})...\n`);
+        this.player?.changePosition(currentPos.x + 1, currentPos.y);
+      }
+      
+      this.currentRoom?.renderRoom();
+      this.currentGameState = GameStateEnum.Paused;
     }
   }
 }

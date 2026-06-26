@@ -11,7 +11,7 @@ var GameStateEnum;
     GameStateEnum[GameStateEnum["Paused"] = 2] = "Paused";
     GameStateEnum[GameStateEnum["GameOver"] = 3] = "GameOver";
 })(GameStateEnum || (GameStateEnum = {}));
-class GameState {
+export class GameState {
     currentGameState;
     player = null;
     currentRoom = null;
@@ -21,16 +21,28 @@ class GameState {
     startGame() {
         this.currentGameState = GameStateEnum.Running;
         this.player = new Player("Hero");
-        this.currentRoom = new Room([[0, 0], [10, 10]], [new Enemy("Goblin", 30, 5)]);
+        this.currentRoom = new Room(10, 5, [new Enemy("Goblin", 30, 5)], this.player);
         console.log("Game started!");
         console.log(`Player: ${this.player.getName()}}`);
         console.log(`Current Room: ${this.currentRoom}`);
     }
+    getPlayer() {
+        return this.player;
+    }
+    getCurrentRoom() {
+        return this.currentRoom;
+    }
     gameLoop() {
         if (this.currentGameState == GameStateEnum.Running) {
-            // Render the room grid and player position
-            // Read player input for movement or actions
-            // Update the game state based on player actions and enemy behavior
+            this.currentRoom?.renderRoom();
+            // 2. Simulate moving the player forward
+            const currentPos = this.player?.getPosition();
+            if (currentPos) {
+                console.log(`\nMoving Hero to (${currentPos.x + 1}, ${currentPos.y})...\n`);
+                this.player?.changePosition(currentPos.x + 1, currentPos.y);
+            }
+            this.currentRoom?.renderRoom();
+            this.currentGameState = GameStateEnum.Paused;
         }
     }
 }
