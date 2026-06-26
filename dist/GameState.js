@@ -23,7 +23,7 @@ export class GameState {
         this.player = new Player("Hero");
         this.currentRoom = new Room(10, 5, [new Enemy("Goblin", 30, 5)], this.player);
         console.log("Game started!");
-        console.log(`Player: ${this.player.getName()}}`);
+        console.log(`Player: ${this.player.getName()}`);
         console.log(`Current Room: ${this.currentRoom}`);
     }
     getPlayer() {
