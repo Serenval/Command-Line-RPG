@@ -1,7 +1,7 @@
 // A location in the game world, it can contain items, enemies, and other interactive elements.
 // TODO:
 // Create a basic structure for the Room class, including the boundaries and enemies.
-
+import { Creature } from "./Creature.js";
 import { Player } from './Player.js';
 import { Enemy } from './Enemy.js';
 export class Room {
@@ -51,25 +51,25 @@ export class Room {
       console.log(newRow);
     }
   }
-  public moveUp(creature: Player | Enemy): void {
+  public moveUp(creature: Creature): void {
     const currentPos = creature.getPosition();
     if (currentPos.y > 0) {
       creature.changePosition(currentPos.x, currentPos.y - 1);
     }
   }
-  public moveDown(creature: Player | Enemy): void {
+  public moveDown(creature: Creature): void {
     const currentPos = creature.getPosition();
     if (currentPos.y < this.height - 1) {
       creature.changePosition(currentPos.x, currentPos.y + 1);
     }
   }
-  public moveLeft(creature: Player | Enemy): void {
+  public moveLeft(creature: Creature): void {
     const currentPos = creature.getPosition();
     if (currentPos.x > 0) {
       creature.changePosition(currentPos.x - 1, currentPos.y);
     }
   }
-  public moveRight(creature: Player | Enemy): void {
+  public moveRight(creature: Creature): void {
     const currentPos = creature.getPosition();
     if (currentPos.x < this.width - 1) {
       creature.changePosition(currentPos.x + 1, currentPos.y);

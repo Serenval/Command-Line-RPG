@@ -1,3 +1,4 @@
+import { Creature } from "./Creature.js";
 import { Player } from './Player.js';
 import { Enemy } from './Enemy.js';
 export declare class Room {
@@ -8,10 +9,10 @@ export declare class Room {
     constructor(width: number, height: number, enemies: Enemy[], player: Player);
     getEnemy(index: number): Enemy | undefined;
     renderRoom(): void;
-    moveUp(creature: Player | Enemy): void;
-    moveDown(creature: Player | Enemy): void;
-    moveLeft(creature: Player | Enemy): void;
-    moveRight(creature: Player | Enemy): void;
+    moveUp(creature: Creature): void;
+    moveDown(creature: Creature): void;
+    moveLeft(creature: Creature): void;
+    moveRight(creature: Creature): void;
     createRandomRoom(): void;
 }
 //# sourceMappingURL=Room.d.ts.map

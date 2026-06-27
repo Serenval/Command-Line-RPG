@@ -1,6 +1,7 @@
 // A location in the game world, it can contain items, enemies, and other interactive elements.
 // TODO:
 // Create a basic structure for the Room class, including the boundaries and enemies.
+import { Creature } from "./Creature.js";
 import { Player } from './Player.js';
 import { Enemy } from './Enemy.js';
 export class Room {

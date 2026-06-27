@@ -35,10 +35,10 @@ export class GameState {
     }
     gameLoop() {
         while (this.currentGameState == GameStateEnum.Running) {
+            console.clear();
             this.currentRoom?.renderRoom();
             const input = readlineSync.question("Enter command (w/a/s/d to move):");
             this.getUserInput(input);
-            this.currentRoom?.renderRoom();
         }
     }
     getUserInput(input) {
