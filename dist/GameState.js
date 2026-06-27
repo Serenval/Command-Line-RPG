@@ -2,6 +2,7 @@
 // TODO: 
 // Implement the game state management logic.
 import * as readlineSync from 'readline-sync';
+import { Creature } from './Creature.js';
 import { Player } from './Player.js';
 import { Enemy } from './Enemy.js';
 import { Room } from './Room.js';
@@ -9,13 +10,15 @@ var GameStateEnum;
 (function (GameStateEnum) {
     GameStateEnum[GameStateEnum["NotStarted"] = 0] = "NotStarted";
     GameStateEnum[GameStateEnum["Running"] = 1] = "Running";
-    GameStateEnum[GameStateEnum["Paused"] = 2] = "Paused";
-    GameStateEnum[GameStateEnum["GameOver"] = 3] = "GameOver";
+    GameStateEnum[GameStateEnum["Combat"] = 2] = "Combat";
+    GameStateEnum[GameStateEnum["Paused"] = 3] = "Paused";
+    GameStateEnum[GameStateEnum["GameOver"] = 4] = "GameOver";
 })(GameStateEnum || (GameStateEnum = {}));
 export class GameState {
     currentGameState;
     player = null;
     currentRoom = null;
+    currentEnemy = null;
     constructor() {
         this.currentGameState = GameStateEnum.NotStarted;
     }
@@ -34,12 +37,30 @@ export class GameState {
         return this.currentRoom;
     }
     gameLoop() {
-        while (this.currentGameState == GameStateEnum.Running) {
-            console.clear();
-            this.currentRoom?.renderRoom();
-            const input = readlineSync.question("Enter command (w/a/s/d to move):");
-            this.getUserInput(input);
+        while (this.currentGameState != GameStateEnum.GameOver) {
+            if (this.currentGameState === GameStateEnum.Running) {
+                this.handleExploration();
+            }
+            else if (this.currentGameState === GameStateEnum.Combat) {
+                this.handleCombat();
+            }
         }
+    }
+    handleExploration() {
+        console.log("Exploring the room...");
+        console.clear();
+        this.currentRoom?.renderRoom();
+        const input = readlineSync.question("Enter command (w/a/s/d to move):");
+        this.getUserInput(input);
+        this.currentEnemy = this.checkCollision();
+        if (this.currentEnemy) {
+            this.currentGameState = GameStateEnum.Combat;
+        }
+    }
+    handleCombat() {
+        console.clear();
+        console.log(`Encountered an enemy: ${this.currentEnemy?.getName()}!`);
+        console.log("Entering combat mode!");
     }
     getUserInput(input) {
         switch (input) {
@@ -58,6 +79,17 @@ export class GameState {
             default:
                 break;
         }
+    }
+    checkCollision() {
+        const playerPos = this.player?.getPosition();
+        if (!playerPos) {
+            return null;
+        }
+        const collidedEnemy = this.currentRoom?.enemies.find(enemy => {
+            const pos = enemy.getPosition();
+            return pos.x === playerPos?.x && pos.y === playerPos?.y;
+        });
+        return collidedEnemy || null;
     }
 }
 //# sourceMappingURL=GameState.js.map

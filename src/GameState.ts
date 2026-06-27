@@ -9,6 +9,7 @@ import { Room } from './Room.js';
 enum GameStateEnum {
   NotStarted,
   Running,
+  Combat,
   Paused,
   GameOver
 }
@@ -17,6 +18,7 @@ export class GameState {
   private currentGameState: GameStateEnum;
   private player: Player | null = null;
   private currentRoom: Room | null = null;
+  public currentEnemy: Enemy | null = null;
 
   constructor() {
     this.currentGameState = GameStateEnum.NotStarted;
@@ -37,13 +39,31 @@ export class GameState {
     return this.currentRoom;
   }
   public gameLoop(): void {
-    while(this.currentGameState == GameStateEnum.Running) {
-      console.clear();
-      this.currentRoom?.renderRoom();
-      const input = readlineSync.question("Enter command (w/a/s/d to move):");
-      this.getUserInput(input);
+    while(this.currentGameState != GameStateEnum.GameOver) {
+      if (this.currentGameState === GameStateEnum.Running) {
+        this.handleExploration();
+      } else if (this.currentGameState === GameStateEnum.Combat) {
+        this.handleCombat();
+      }
     }
   }
+  public handleExploration(): void {
+    console.log("Exploring the room...");
+    console.clear();
+    this.currentRoom?.renderRoom();
+    const input = readlineSync.question("Enter command (w/a/s/d to move):");
+    this.getUserInput(input);
+    this.currentEnemy = this.checkCollision();
+    if (this.currentEnemy) {
+      this.currentGameState = GameStateEnum.Combat;
+    }
+  }
+  public handleCombat(): void {
+    console.clear();
+    console.log(`Encountered an enemy: ${this.currentEnemy?.getName()}!`);
+    console.log("Entering combat mode!");
+  }
+
   public getUserInput(input: string): void {
     switch(input) {
       case "w":
@@ -61,5 +81,17 @@ export class GameState {
       default:
         break;
     }
+  }
+
+  public checkCollision(): Enemy | null {
+    const playerPos = this.player?.getPosition();
+    if (!playerPos) {
+      return null;
+    }
+    const collidedEnemy = this.currentRoom?.enemies.find(enemy => {
+      const pos = enemy.getPosition();
+      return pos.x === playerPos?.x && pos.y === playerPos?.y;
+    });
+    return collidedEnemy || null;
   }
 }
