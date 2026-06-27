@@ -9,5 +9,6 @@ export declare class GameState {
     getPlayer(): Player | null;
     getCurrentRoom(): Room | null;
     gameLoop(): void;
+    getUserInput(input: string): void;
 }
 //# sourceMappingURL=GameState.d.ts.map

@@ -1,7 +1,7 @@
 // The game state will be responsible for keeping status of the game, doing things like tracking the current level, player progress, and other game-related information.
 // TODO: 
 // Implement the game state management logic.
-
+import * as readlineSync from 'readline-sync';
 import { Player } from './Player.js';
 import { Enemy } from './Enemy.js';
 import { Room } from './Room.js';
@@ -37,17 +37,30 @@ export class GameState {
     return this.currentRoom;
   }
   public gameLoop(): void {
-    if(this.currentGameState == GameStateEnum.Running) {
+    while(this.currentGameState == GameStateEnum.Running) {
       this.currentRoom?.renderRoom();
-      // 2. Simulate moving the player forward
-      const currentPos = this.player?.getPosition();
-      if (currentPos) {
-        console.log(`\nMoving Hero to (${currentPos.x + 1}, ${currentPos.y})...\n`);
-        this.player?.changePosition(currentPos.x + 1, currentPos.y);
-      }
+      const input = readlineSync.question("Enter command (w/a/s/d to move):");
+      this.getUserInput(input);
       
       this.currentRoom?.renderRoom();
-      this.currentGameState = GameStateEnum.Paused;
+    }
+  }
+  public getUserInput(input: string): void {
+    switch(input) {
+      case "w":
+        this.currentRoom?.moveUp(this.player!);
+        break;
+      case "s":
+        this.currentRoom?.moveDown(this.player!);
+        break;
+      case "a":
+        this.currentRoom?.moveLeft(this.player!);
+        break;
+      case "d":
+        this.currentRoom?.moveRight(this.player!);
+        break;
+      default:
+        break;
     }
   }
 }

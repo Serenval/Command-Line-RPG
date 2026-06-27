@@ -51,6 +51,30 @@ export class Room {
       console.log(newRow);
     }
   }
+  public moveUp(creature: Player | Enemy): void {
+    const currentPos = creature.getPosition();
+    if (currentPos.y > 0) {
+      creature.changePosition(currentPos.x, currentPos.y - 1);
+    }
+  }
+  public moveDown(creature: Player | Enemy): void {
+    const currentPos = creature.getPosition();
+    if (currentPos.y < this.height - 1) {
+      creature.changePosition(currentPos.x, currentPos.y + 1);
+    }
+  }
+  public moveLeft(creature: Player | Enemy): void {
+    const currentPos = creature.getPosition();
+    if (currentPos.x > 0) {
+      creature.changePosition(currentPos.x - 1, currentPos.y);
+    }
+  }
+  public moveRight(creature: Player | Enemy): void {
+    const currentPos = creature.getPosition();
+    if (currentPos.x < this.width - 1) {
+      creature.changePosition(currentPos.x + 1, currentPos.y);
+    }
+  }
   public createRandomRoom(): void {
     // Implement logic to create a random room with boundaries and enemies
   }

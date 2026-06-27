@@ -18,8 +18,12 @@
   "homepage": "https://github.com/Serenval/Command-Line-RPG#readme",
   "description": "",
   "devDependencies": {
+    "@types/readline-sync": "^1.4.8",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
